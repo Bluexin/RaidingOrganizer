@@ -63,6 +63,7 @@ fun String.escapeHTML(): String {
                 '+' -> append("&#x2b;")
                 ',' -> append("&#x2c;")
                 '=' -> append("&#x3d;")
+                '?' -> append("&#x3f;")
                 '@' -> append("&#x40;")
                 '[' -> append("&#x5b;")
                 ']' -> append("&#x5d;")
@@ -83,3 +84,5 @@ val imageHeaders = mapOf(
         "gif" to byteArrayOf(0x47, 0x49, 0x46, 0x38)/*,
         "svg" to byteArrayOf(0x3C, 0x73, 0x76, 0x67)*/
 )
+
+val Any?.httpStatusCode get() = if (this == null) HttpStatusCode.NotFound else HttpStatusCode.OK

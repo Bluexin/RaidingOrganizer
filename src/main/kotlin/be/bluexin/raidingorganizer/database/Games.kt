@@ -6,7 +6,9 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.IntIdTable
 
 class DbGame(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<DbGame>(GamesTable)
+    companion object : IntEntityClass<DbGame>(GamesTable) {
+        fun findBySlug(slug: String) = find { GamesTable.slug eq slug }.firstOrNull()
+    }
 
     var name by GamesTable.name
     var slug by GamesTable.slug

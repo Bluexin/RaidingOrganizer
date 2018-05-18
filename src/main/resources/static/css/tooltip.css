@@ -1,0 +1,64 @@
+.tooltip {
+    outline: none;
+}
+
+.tooltip:hover {
+    text-decoration: none;
+}
+
+.tooltip iframe {
+    z-index: 10;
+    display: none;
+    position: absolute;
+}
+
+.tooltip:hover iframe {
+    display: inline;
+}
+
+.lightbox-target {
+    position: fixed;
+    left: 0;
+    z-index: 10;
+    top: -100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .7);
+    opacity: 0;
+    transition: opacity .5s ease-in-out;
+    overflow: hidden;
+}
+
+.lightbox-target img {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 0;
+    max-width: 0;
+    border: 3px solid rgb(50, 50, 50);
+    box-shadow: 0 0 8px rgba(0, 0, 0, .3);
+    box-sizing: border-box;
+    transition: .5s ease-in-out;
+}
+
+.lightbox-target:target {
+    opacity: 1;
+    top: 0;
+    bottom: 0;
+}
+
+.lightbox-target:target img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.lightbox-target:target a.lightbox-close {
+    top: 0;
+}
+
+.game-logo {
+    background: rgba(50, 50, 50, 0.5);
+    background: radial-gradient(closest-side, rgb(50, 50, 50) 50%, transparent);
+}

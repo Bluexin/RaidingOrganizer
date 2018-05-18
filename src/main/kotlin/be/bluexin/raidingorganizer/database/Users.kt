@@ -27,7 +27,7 @@ class User(id: EntityID<Long>) : LongEntity(id) {
 }
 
 object UsersTable : LongIdTable() {
-    val name = varchar("slug", 255).uniqueIndex()
+    val name = varchar("name", 255).uniqueIndex()
     val discordUser = reference("discordUser", DiscordUserTable).uniqueIndex()
     val avatar = varchar("avatar", 255).nullable()
     val theme = enumerationByName("theme", 255, Themes::class.java)

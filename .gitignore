@@ -6,3 +6,4 @@ out/
 /settings.json
 /package-lock.json
 upload/
+/ref/

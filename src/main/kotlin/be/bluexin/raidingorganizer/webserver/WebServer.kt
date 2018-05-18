@@ -9,6 +9,7 @@ import be.bluexin.raidingorganizer.restclient.DiscordSession
 import be.bluexin.raidingorganizer.restclient.UserSession
 import be.bluexin.raidingorganizer.settings
 import freemarker.cache.ClassTemplateLoader
+import freemarker.template.TemplateExceptionHandler
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.client.HttpClient
@@ -67,6 +68,8 @@ private fun Application.installs() {
     install(AutoHeadResponse)
     install(FreeMarker) {
         templateLoader = ClassTemplateLoader(Index::class.java.classLoader, "templates")
+        templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
+        defaultEncoding = "UTF-8"
     }
     install(StatusPages) {
         status(*HttpStatusCode.allStatusCodes.filter { !it.isSuccess() }.toTypedArray()) {
@@ -102,7 +105,6 @@ fun Application.main() {
     installs()
 
     install(Routing) {
-
         location<Static> {
             resources("static")
         }
@@ -121,9 +123,11 @@ fun Application.main() {
             call.respond(HttpStatusCode.OK)
         }
 
-        api()
-
+        installApi()
         installUserEndpoints()
+        installUploads()
+        installEmbeds()
+        installGameEndpoints()
     }
 }
 

@@ -13,11 +13,11 @@ import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 
 val DbGame?.model
-    get() = if (this != null) Game(this.name)
+    get() = if (this != null) Game(slug, name, background, description, url)
     else null
 
 val Game.db
-    get() = transaction { DbGame.find { GamesTable.name like name }.firstOrNull() }
+    get() = transaction { DbGame.find { GamesTable.slug eq slug }.firstOrNull() }
 
 fun <ID : Comparable<ID>, EN : Entity<ID>> EntityClass<ID, EN>.createOrUpdate(find: SqlExpressionBuilder.() -> Op<Boolean>, update: EN.() -> Unit) = this.find(find).firstOrNull()?.also { it.update() }
         ?: this.new(update)

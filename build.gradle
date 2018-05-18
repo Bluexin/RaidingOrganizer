@@ -59,6 +59,7 @@ kotlin {
 }
 
 def generatedJsDir = "$buildDir/resources/main/static/js"
+def generatedCssDir = "$buildDir/resources/main/static/css"
 
 task generateJs {
     def sourceDir = 'src/main/js'
@@ -68,6 +69,21 @@ task generateJs {
         }
         exec {
             commandLine 'uglifyjs', new File(generatedJsDir, file.name), "-c", "-o", new File(generatedJsDir, "${file.name.substring(0, file.name.indexOf(".js"))}.min.js")
+        }
+    }
+    file('src/main/resources/static/js').eachFile { file ->
+        exec {
+            commandLine 'uglifyjs', "$file", "-c", "-o", new File(generatedJsDir, "${file.name.substring(0, file.name.indexOf(".js"))}.min.js")
+        }
+    }
+}
+
+task compressCss {
+    def sourceDir = 'src/main/resources/static/css'
+    new File(generatedCssDir).mkdirs()
+    file("$sourceDir").eachFile  { file ->
+        exec {
+            commandLine 'uglifycss', "$file", "--output", new File(generatedCssDir, "${file.name.substring(0, file.name.indexOf(".css"))}.min.css")
         }
     }
 }

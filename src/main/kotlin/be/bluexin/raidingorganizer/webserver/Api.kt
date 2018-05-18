@@ -1,8 +1,5 @@
 package be.bluexin.raidingorganizer.webserver
 
-import be.bluexin.raidingorganizer.database.DbGame
-import be.bluexin.raidingorganizer.database.GamesTable
-import be.bluexin.raidingorganizer.database.model
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.StatusPages
@@ -14,9 +11,8 @@ import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.get
 import org.jetbrains.exposed.sql.transactions.TransactionManager
-import org.jetbrains.exposed.sql.transactions.transaction
 
-fun Routing.api() {
+fun Routing.installApi() {
     location<Api> {
         install(StatusPages) {
             status(*HttpStatusCode.allStatusCodes.filter { !it.isSuccess() }.toTypedArray()) {
@@ -35,9 +31,12 @@ fun Routing.api() {
             ))
         }
 
+        get<GetUser> {
+            call.respondAutoStatus(it.getTarget())
+        }
+
         get<GameEndpoint> {
-            val g = transaction { DbGame.find { GamesTable.name like it.slug }.firstOrNull().model }
-            call.respondAutoStatus(g)
+            call.respondAutoStatus(it.getModelTarget())
         }
     }
 }

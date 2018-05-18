@@ -31,7 +31,7 @@
             </p>
             <p class="level-item has-text-centered">
                 <#if user??>
-                    Logged in as&nbsp;<a href="/user/${user.id}">${user.name}</a>&nbsp;(<a onclick="logout()">logout</a>)
+                    Logged in as&nbsp;<user uid="${user.id}">${user.name}</user>&nbsp;(<a onclick="logout()">logout</a>)
                 <#else>
                     <a onclick="popup()">Log in</a>
                 </#if>

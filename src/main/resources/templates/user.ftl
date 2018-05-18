@@ -1,12 +1,13 @@
 <#--noinspection JSIgnoredPromiseFromCall-->
+<#-- @ftlvariable name="target" type="be.bluexin.raidingorganizer.database.User" -->
 <html>
 <head>
-    <#include "head.ftl">
+    <#include "include/head.ftl">
     <link href="https://transloadit.edgly.net/releases/uppy/v0.24.2/dist/uppy.min.css" rel="stylesheet">
     <title>User ${(target.name)!"not found"} - Raiding Organizer</title>
 </head>
 <body>
-<#include "header.ftl">
+<#include "include/header.ftl">
 <section class="section">
     <div class="container">
     <#if target??>
@@ -20,9 +21,7 @@
         </#if>
         <article class="media">
             <figure class="media-left">
-                <p class="image is-128x128">
-                    <img src="${target.avatarUrl}">
-                </p>
+                <lightbox src="${target.avatarUrl}" class="is-128x128"></lightbox>
             </figure>
             <div class="content">
                 <h1 id="name_display" class="title">${target.name}
@@ -123,6 +122,6 @@
     </#if>
     </div>
 </section>
-<#include "footer.ftl">
+<#include "include/footer.ftl">
 </body>
 </html>
