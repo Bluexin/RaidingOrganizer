@@ -1,6 +1,6 @@
 package be.bluexin.raidingorganizer.webserver
 
-import be.bluexin.raidingorganizer.restclient.UserSession
+import be.bluexin.raidingorganizer.jacksonMapper
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
@@ -29,7 +29,9 @@ suspend inline fun ApplicationCall.respondAutoStatus(message: Any?) {
     ))
 }
 
-class JacksonSerializer(private val mapper: ObjectMapper) : JsonSerializer {
+object JacksonSerializer : JsonSerializer {
+
+    private val mapper: ObjectMapper by lazy { jacksonMapper }
 
     override suspend fun read(type: KClass<*>, response: HttpResponse): Any {
         if (!response.status.isSuccess()) throw IllegalArgumentException("Received status ${response.status.value}: ${response.status.description}")

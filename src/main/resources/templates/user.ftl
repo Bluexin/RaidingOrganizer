@@ -26,7 +26,7 @@
             <div class="content">
                 <h1 id="name_display" class="title">${target.name}
                     <#if target.name != target.discordUser.handle>
-                            &nbsp;<small>@${target.discordUser.handle}</small>
+                            <small class="subtitle">@${target.discordUser.handle}</small>
                     </#if>
                     <#if edit>
                         <a class="button" onclick="t.showNameEdit()">

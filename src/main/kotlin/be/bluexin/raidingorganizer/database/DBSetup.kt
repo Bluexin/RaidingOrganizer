@@ -18,7 +18,15 @@ fun setupDB() {
                     GamesTable,
                     SessionStorageDatabase.UserSessionsTable,
                     UsersTable,
-                    DiscordUserTable
+                    DiscordUserTable,
+                    InstancesTable,
+                    BossesTable,
+                    LootTable,
+                    ItemsTable,
+                    TypesTable,
+                    RaidGroupsTable,
+                    RollcallsTable,
+                    CharactersTable
             )
         }
     } catch (e: SQLException) {

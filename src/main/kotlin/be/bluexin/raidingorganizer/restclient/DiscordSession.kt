@@ -1,6 +1,5 @@
 package be.bluexin.raidingorganizer.restclient
 
-import be.bluexin.raidingorganizer.jacksonMapper
 import be.bluexin.raidingorganizer.logger
 import be.bluexin.raidingorganizer.webserver.JacksonSerializer
 import io.ktor.client.HttpClient
@@ -25,7 +24,7 @@ data class DiscordSession(val accessToken: String, val expiresIn: Long, val refr
             }
         }) {
             install(JsonFeature) {
-                serializer = JacksonSerializer(jacksonMapper)
+                serializer = JacksonSerializer
             }
         }
         return try {

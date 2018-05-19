@@ -37,6 +37,7 @@ dependencies {
     compile "io.ktor:ktor-locations:$ktor_version"
     compile "io.ktor:ktor-html-builder:$ktor_version"
     compile "io.ktor:ktor-client-json:$ktor_version"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.2"
     compile 'org.jetbrains.exposed:exposed:0.10.2'
     compile 'org.mariadb.jdbc:mariadb-java-client:2.2.3'
     compile "ch.qos.logback:logback-classic:1.2.1"

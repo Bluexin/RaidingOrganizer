@@ -1,23 +1,20 @@
 package be.bluexin.raidingorganizer.database
 
-import be.bluexin.raidingorganizer.webserver.Game
 import org.jetbrains.exposed.dao.*
 import org.jetbrains.exposed.sql.Op
+import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.SqlExpressionBuilder
 import org.jetbrains.exposed.sql.transactions.TransactionManager
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.joda.time.DateTime
+import java.time.LocalDateTime
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 
-val DbGame?.model
-    get() = if (this != null) Game(slug, name, background, description, url)
-    else null
-
-val Game.db
-    get() = transaction { DbGame.find { GamesTable.slug eq slug }.firstOrNull() }
+fun LocalDateTime.toJoda() = DateTime(year, month.value, dayOfMonth, hour, minute, second)
+fun DateTime.toJava() = LocalDateTime.of(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, secondOfMinute)
 
 fun <ID : Comparable<ID>, EN : Entity<ID>> EntityClass<ID, EN>.createOrUpdate(find: SqlExpressionBuilder.() -> Op<Boolean>, update: EN.() -> Unit) = this.find(find).firstOrNull()?.also { it.update() }
         ?: this.new(update)
@@ -84,6 +81,18 @@ abstract class EagerEntityClass<ID : Comparable<ID>, out T : Entity<ID>>(table: 
                 it.isAccessible = true
                 @Suppress("USELESS_CAST")
                 (it as KProperty1<*, *>)(this)
+            }
+        }
+    }
+
+    fun allEager(): SizedIterable<T> {
+        return super.all().onEach {
+            with(it) {
+                this::class.declaredMemberProperties.forEach {
+                    it.isAccessible = true
+                    @Suppress("USELESS_CAST")
+                    (it as KProperty1<*, *>)(this)
+                }
             }
         }
     }

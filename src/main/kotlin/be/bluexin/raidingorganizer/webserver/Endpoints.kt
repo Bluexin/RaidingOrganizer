@@ -2,7 +2,6 @@ package be.bluexin.raidingorganizer.webserver
 
 import be.bluexin.raidingorganizer.database.DbGame
 import be.bluexin.raidingorganizer.database.User
-import be.bluexin.raidingorganizer.database.model
 import io.ktor.locations.Location
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -56,7 +55,10 @@ class Api
 
 @Location(path = "game/{slug?}")
 data class GameEndpoint(val slug: String? = null) {
-    fun getDbTarget() = if (slug == null) null else transaction { DbGame.findBySlug(slug) }
+    fun getTarget() = if (slug == null) null else transaction { DbGame.findBySlug(slug) }
 
-    fun getModelTarget() = getDbTarget().model
+    @Location(path = "instance/{islug?}")
+    data class InstanceEndpoint(val islug: String? = null, val game: GameEndpoint) {
+        fun getTarget() = if (islug == null) null else transaction { game.getTarget()?.findInstanceBySlug(islug) }
+    }
 }

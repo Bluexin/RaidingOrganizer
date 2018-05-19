@@ -16,7 +16,7 @@ fun Routing.installEmbeds() {
         }
 
         get<GameEndpoint> {
-            val target = it.getDbTarget()
+            val target = it.getTarget()
             call.respond(target.httpStatusCode, FreeMarkerContent("embed/game.ftl",
                     mapOf("user" to getUser(), "target" to target)))
         }

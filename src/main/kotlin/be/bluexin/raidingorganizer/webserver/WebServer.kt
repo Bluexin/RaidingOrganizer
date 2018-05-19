@@ -6,7 +6,6 @@ import be.bluexin.raidingorganizer.database.createIfAbsent
 import be.bluexin.raidingorganizer.database.createOrUpdate
 import be.bluexin.raidingorganizer.jacksonMapper
 import be.bluexin.raidingorganizer.restclient.DiscordSession
-import be.bluexin.raidingorganizer.restclient.UserSession
 import be.bluexin.raidingorganizer.settings
 import freemarker.cache.ClassTemplateLoader
 import freemarker.template.TemplateExceptionHandler

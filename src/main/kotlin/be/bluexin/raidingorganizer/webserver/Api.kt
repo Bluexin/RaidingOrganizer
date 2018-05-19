@@ -32,11 +32,11 @@ fun Routing.installApi() {
         }
 
         get<GetUser> {
-            call.respondAutoStatus(it.getTarget())
+            //            call.respondAutoStatus(it.getTarget())
         }
 
         get<GameEndpoint> {
-            call.respondAutoStatus(it.getModelTarget())
+            //            call.respondAutoStatus(it.getModelTarget())
         }
     }
 }
